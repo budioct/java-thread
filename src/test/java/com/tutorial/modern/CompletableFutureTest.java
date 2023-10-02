@@ -22,7 +22,7 @@ public class CompletableFutureTest {
     @Test
     void testCreateCompletableFuture() throws ExecutionException, InterruptedException {
 
-        Future<String> future = completableFutureApp.getValue();
+        Future<String> future = completableFutureApp.getValue(); // Future<String> getValue()
         System.out.println(future.get());
 
     }
@@ -32,6 +32,23 @@ public class CompletableFutureTest {
 
         CompletableFuture<String> future = completableFutureApp.getValue2();
         System.out.println(future.get());
+
+    }
+
+    @Test
+    void testCreateCompletableExecute() throws ExecutionException, InterruptedException {
+
+        CompletableFuture<String> future = new CompletableFuture<>();
+        completableFutureApp.execute(future, "this execute method create from test");
+        System.out.println(future.get());
+
+    }
+
+    @Test
+    void testCreateCompletableFastest() throws ExecutionException, InterruptedException {
+
+        Future<String> fastest = completableFutureApp.getFastest();
+        System.out.println(fastest.get());
 
     }
 

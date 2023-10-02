@@ -1,5 +1,6 @@
 package com.tutorial.data;
 
+import java.util.Random;
 import java.util.concurrent.*;
 import java.util.function.Function;
 
@@ -41,12 +42,39 @@ public class CompletableFutureApp {
 
     }
 
+    public void execute(CompletableFuture<String> future, String value) {
+
+        Random random = new Random();
+
+        executorService.execute(() -> {
+            try {
+                Thread.sleep(1000L + random.nextInt(5000));
+                future.complete(value);
+            } catch (InterruptedException e) {
+                future.completeExceptionally(e);
+            }
+        });
+
+    }
+
+    public Future<String> getFastest() {
+
+        CompletableFuture<String> future = new CompletableFuture<>();
+
+        execute(future, "Thread 1");
+        execute(future, "Thread 2");
+        execute(future, "Thread 3");
+
+        return future;
+    }
+
     public void getCompletionStage() throws ExecutionException, InterruptedException {
 
         CompletableFuture<String> future1 = getValue2();
 
         // lambda
-        CompletableFuture<String[]> future2 = future1.thenApply((String string) -> string.toUpperCase())
+        CompletableFuture<String[]> future2 = future1
+                .thenApply((String string) -> string.toUpperCase())
                 .thenApply((String string) -> string.split(" "));
 
         // anonymouse class
@@ -64,7 +92,7 @@ public class CompletableFutureApp {
 
         String[] data = future3.get(); // T get() throws InterruptedException, ExecutionException
 
-        for (String string : data){
+        for (String string : data) {
             System.out.println(string);
         }
 
