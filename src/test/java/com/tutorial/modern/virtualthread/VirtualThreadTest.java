@@ -10,7 +10,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
-public class PlatformThreadTest {
+public class VirtualThreadTest {
 
     @Test
     void testCreatePlatformThread() throws InterruptedException, IOException {
