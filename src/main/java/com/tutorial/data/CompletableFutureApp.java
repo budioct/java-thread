@@ -98,4 +98,22 @@ public class CompletableFutureApp {
 
     }
 
+    public static int compute(int n) {
+        System.out.println("Compute called");
+        if (n <= 0) {
+//            try {
+//                Thread.sleep(100);
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+            throw new RuntimeException("invalid input");
+        }
+
+        return n * 2;
+    }
+
+    public static CompletableFuture<Integer> create(int n) {
+        return CompletableFuture.supplyAsync(() -> (Integer) compute(n));
+    }
+
 }
